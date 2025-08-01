@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order - Regal Looms</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("O3qMhvT7GY1j_NVxH"); // Replace with your EmailJS user ID
+    })();
+  </script>
+</head>
+<body>
+  <main>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark navbarScroll">
+        <div class="container">
+            <a class="navbar-brand" href="index.html#home"><h2>Regal<span class="secondary fs-4">looms</span></h2></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html#home">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">ABOUT US</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#catalogue">PRODUCTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">CONTACT US</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <section id="order">
+  <!-- Order Form Section -->
+<section class="order-section py-5">
+  <div class="container">
+    <h2 class="mb-4 just" style="padding-left: 70px;">Place Your Order</h2>
+    <form id="orderForm">
+      <input type="hidden" name="date" id="date">
+  <div class="mb-3">
+    <label for="name" class="form-label">Full Name</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="tel" class="form-control" id="phone" name="phone" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="product" class="form-label">Product</label>
+    <input type="text" class="form-control" id="product" name="product" required>
+  </div>
+
+  <div class="mb-3 d-none" id="riceTypeGroup" style="display: none;">
+    <label for="riceType" class="form-label">Rice Type</label>
+    <select id="riceType" name="rice_type" class="form-select">
+      <option value="">-- Select rice type --</option>
+      <option value="White Basmati">White Basmati</option>
+      <option value="Gold Basmati">Gold Basmati</option>
+      <option value="Long Grain">Long Grain</option>
+      <option value="Grade 1">Grade 1</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity (kgs or units)</label>
+    <input type="number" class="form-control" id="quantity" name="quantity" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="message" class="form-label">Additional Message (Optional)</label>
+    <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+  </div>
+
+  <!-- Hidden field for date -->
+  <input type="hidden" name="date" id="date">
+
+  <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+  </div>
+
+
+  <div id="successMessage" class="alert alert-success mt-3 d-none">Your order has been submitted successfully!<P>Check your E-mail notifications for purchase details. Thank You!</P> </div> 
+</div>
+</section>
+</main>
+<!-- footer section -->
+ <section id="contact" class="contact-section">
+  <footer class="bg-dark text-white text-center p-3">
+    © 2025 Regal Looms
+  </footer>
+</section>
+    
+
+  <script>
+    document.getElementById('orderForm').addEventListener('submit', function(e){
+      e.preventDefault();
+  document.getElementById("date").value = new Date().toLocaleString();
+
+  // ✅ Ensure rice_type has a value (set to "N/A" if empty)
+  const riceTypeField = document.getElementById("riceType");
+  if (riceTypeField && riceTypeField.value.trim() === "") {
+    riceTypeField.value = "N/A";
+  }
+      emailjs.sendForm('service_4ej967l', 'template_evvxxxe', this)
+      .then(function() {
+        document.getElementById('successMessage').classList.remove('d-none');
+        document.getElementById('orderForm').reset();
+      }, function(error) {
+        alert('Failed to send order. Please try again.\n' + JSON.stringify(error));
+      });
+    });
+   
+  
+  // Helper: read query params
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Show/hide rice type group based on product
+  function toggleRiceTypeGroup(productValue) {
+    const riceTypeGroup = document.getElementById("riceTypeGroup");
+    const riceType = document.getElementById("riceType");
+
+    if (productValue && productValue.trim().toLowerCase() === "rice") {
+      riceTypeGroup.classList.remove("d-none");
+      riceType.required = true;
+    } else {
+      riceTypeGroup.classList.add("d-none");
+      riceType.required = false;
+      riceType.value = ""; // clear if hidden
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const productInput = document.getElementById("product");
+    const riceType = document.getElementById("riceType");
+
+    // Prefill from URL: ?product=...&riceType=...
+    const selectedProduct = getQueryParam("product");
+    const selectedRiceType = getQueryParam("riceType");
+
+    if (selectedProduct) {
+      productInput.value = decodeURIComponent(selectedProduct);
+    }
+
+    // Show/hide rice type based on product
+    toggleRiceTypeGroup(productInput.value);
+
+    // If rice type provided in URL, preselect it
+    if (selectedRiceType) {
+      const value = decodeURIComponent(selectedRiceType);
+      // Only set if it matches one of the options
+      Array.from(riceType.options).forEach(opt => {
+        if (opt.value.toLowerCase() === value.toLowerCase()) {
+          riceType.value = opt.value;
+        }
+      });
+    }
+
+    // If user edits product manually, re-check
+    productInput.addEventListener("input", function () {
+      toggleRiceTypeGroup(this.value);
+    });
+    productInput.addEventListener("change", function () {
+      toggleRiceTypeGroup(this.value);
+    });
+  });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
