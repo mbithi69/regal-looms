@@ -27,7 +27,7 @@ body {
     height: 100vh;
     color: white;
     position: relative;
-    background: url("images/home.png") no-repeat center center / cover;
+    background: url("images/homes.jpg") no-repeat center center / cover;
 }
 
 #home::before {
@@ -68,26 +68,46 @@ body {
 }
 #home .text {
   animation: fadeIn 2s ease-in;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
 }
 #home .btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: #008000;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.1rem;
-    margin-top: 20px;
-    transition: 0.3s ease-in-out;
+    padding: 12px 28px;
+    background: #28a745;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    border-radius: 50px;
+    transition: background 0.3s ease;
 }
 
 #home .btn:hover {
-    background: #005700;
+   background: #218838;
 }
 @media (max-width: 768px) {
   .navbar-brand h2 {
     font-size: 1.25rem;
   }
+}
+#home i.fa-angle-down {
+  animation: bounce 2s infinite;
+}
+#home i.fa-angle-down:hover {
+  color: #28a745;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+#about {
+  scroll-margin-top: 80px;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
 }
 
 @keyframes fadeIn {
@@ -161,7 +181,7 @@ h1 {
     font-size: 1.1rem;
     margin-top: 20px;
     transition: 0.3s ease-in-out;
-    margin-left: 100px;
+    margin-left: 65px;
 }
 
 #about .btn:hover {
